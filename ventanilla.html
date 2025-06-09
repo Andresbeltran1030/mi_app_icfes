@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ventanilla</title>
+</head>
+<body>
+    <h1>Ventanilla de Atención</h1>
+
+    {% if siguiente %}
+        <h2>Próximo turno:</h2>
+        <p><strong>Nombre:</strong> {{ siguiente.nombre }} {{ siguiente.apellido }}</p>
+        <p><strong>Cédula:</strong> {{ siguiente.cedula }}</p>
+        <p><strong>Motivo:</strong> {{ siguiente.motivo }}</p>
+
+        <form action="{{ url_for('llamar') }}" method="post">
+            <button type="submit">Atender Siguiente</button>
+        </form>
+    {% else %}
+        <p>No hay turnos en espera.</p>
+    {% endif %}
+
+    <h2>Historial:</h2>
+    <ul>
+        {% for turno in historial %}
+            <li>
+                {{ turno.nombre }} {{ turno.apellido }} – Cédula: {{ turno.cedula }} – Motivo: {{ turno.motivo }} – Atendido: {{ turno.fecha_atencion }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('index') }}">Volver al formulario</a><br><br>
+    <a href="{{ url_for('reporte') }}">
+        <button>Descargar Reporte Excel</button>
+    </a>
+</body>
+</html>
+    
